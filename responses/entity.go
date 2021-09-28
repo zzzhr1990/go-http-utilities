@@ -4,10 +4,10 @@ import "net/http"
 
 type ResponseEntity struct {
 	// Error() string
-	Reference string
-	Message   string
-	Status    int
-	Success   bool
+	Reference string `json:"reference"`
+	Message   string `json:"message"`
+	Status    int    `json:"status"`
+	Success   bool   `json:"success"`
 }
 
 func (e *ResponseEntity) Error() string {
@@ -27,6 +27,14 @@ func CreateNewInternalErrorResponse(refrence string, message string) *ResponseEn
 		Status:    http.StatusInternalServerError,
 		Message:   message,
 		Reference: refrence,
+	}
+}
+
+func CreateNewPureInternalErrorResponse() *ResponseEntity {
+	return &ResponseEntity{
+		Status:    http.StatusInternalServerError,
+		Message:   "The server encountered an unexpected condition that prevented it from fulfilling the request",
+		Reference: "INTERNAL_ERROR",
 	}
 }
 
